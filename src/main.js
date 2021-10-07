@@ -16,13 +16,13 @@ Vue.filter("error", ErrorFilter)
 ApiService.init()
 
 // Ensure we checked auth before each page load.
-router.beforeEach (to, from, next) ->
+router.beforeEach (to, from, next) *->
 	Promise.all([
-    store.dispatch CHECK-AUTH
-  ]).then next
+		store.dispatch CHECK-AUTH
+	]).then next
 
 Vue([
-  router
-  store
-  render: (h) -> h App
+	router
+	store
+	render: (h) -> h App
 ]).$mount("#app")
