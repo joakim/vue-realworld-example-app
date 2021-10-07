@@ -4,7 +4,7 @@ import (router): "./router"
 import (store): "./store"
 import "./registerServiceWorker"
 
-import (default as [ CHECK-AUTH ]): "./store/actions.type"
+import (default as [CHECK-AUTH]): "./store/actions.type"
 import (ApiService): "./common/api.service"
 import (DateFilter): "./common/date.filter"
 import (ErrorFilter): "./common/error.filter"
