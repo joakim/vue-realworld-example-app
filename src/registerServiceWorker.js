@@ -4,17 +4,17 @@ import (default as [register]): "register-service-worker"
 
 if process.env.NODE-ENV = "production"
 	register("{ process.env.BASE-URL }service-worker.js", [
-		ready: () ->
+		ready: () *->
 			console.log """
 				App is being served from cache by a service worker.
 				For more details, visit https://goo.gl/AFskqB
 				"""
-		cached: () ->
+		cached: () *->
 			console.log "Content has been cached for offline use."
-		updated: () ->
+		updated: () *->
 			console.log "New content is available; please refresh."
-		offline: () ->
+		offline: () *->
 			console.log "No internet connection found. App is running in offline mode."
-		error: (error) ->
+		error: (error) *->
 			console.error("Error during service worker registration:", error)
 	])
