@@ -5,85 +5,85 @@ import (JwtService): "@/common/jwt.service"
 import (default as [API-URL]): "@/common/config"
 
 ApiService: [
-  init: () *->
-    Vue.use(VueAxios, axios)
-    set Vue.axios.defaults.baseURL: API-URL
+    init: () *->
+        Vue.use(VueAxios, axios)
+        set Vue.axios.defaults.baseURL: API-URL
 
-  setHeader: () *->
-    set Vue.axios.defaults.headers.common.{
-      "Authorization"
-    }: "Token { JwtService.getToken() }"
+    setHeader: () *->
+        set Vue.axios.defaults.headers.common.{
+            "Authorization"
+        }: "Token { JwtService.getToken() }"
 
-  query: (resource, params) ->
-    Vue.axios.get(resource, params)
-      .catch (error) *->
-        throw Error "[RWV] ApiService { error }"
+    query: (resource, params) ->
+        Vue.axios.get(resource, params)
+            .catch (error) *->
+                throw Error "[RWV] ApiService { error }"
 
-  get: (resource, slug ? "") ->
-    Vue.axios.get("{ resource }/{ slug }")
-      .catch (error) *->
-        throw Error "[RWV] ApiService { error }"
+    get: (resource, slug ? "") ->
+        Vue.axios.get("{ resource }/{ slug }")
+            .catch (error) *->
+                throw Error "[RWV] ApiService { error }"
 
-  post: (resource, params) ->
-    Vue.axios.post("{ resource }", params)
+    post: (resource, params) ->
+        Vue.axios.post("{ resource }", params)
 
-  update: (resource, slug, params) ->
-    Vue.axios.put("{ resource }/{ slug }", params)
+    update: (resource, slug, params) ->
+        Vue.axios.put("{ resource }/{ slug }", params)
 
-  put: (resource, params) ->
-    Vue.axios.put("{ resource }", params)
+    put: (resource, params) ->
+        Vue.axios.put("{ resource }", params)
 
-  delete: (resource) ->
-    Vue.axios.delete(resource)
-      .catch (error) *->
-        throw Error "[RWV] ApiService { error }"
+    delete: (resource) ->
+        Vue.axios.delete(resource)
+            .catch (error) *->
+                throw Error "[RWV] ApiService { error }"
 ]
 
 export default: ApiService
 
 export TagsService: [
-  get: () -> ApiService.get("tags")
+    get: () -> ApiService.get("tags")
 ]
 
 export ArticlesService: [
-  query: (type, params) ->
-    ApiService.query("articles{ '/feed' if type = 'feed' else '' }", [params])
+    query: (type, params) ->
+        ApiService.query("articles{ '/feed' if type = 'feed' else '' }", [params])
 
-  get: (slug) ->
-    ApiService.get("articles", slug)
+    get: (slug) ->
+        ApiService.get("articles", slug)
 
-  create: (params) ->
-    ApiService.post("articles", [article: params])
+    create: (params) ->
+        ApiService.post("articles", [article: params])
 
-  update: (slug, params) ->
-    ApiService.update("articles", slug, [article: params])
+    update: (slug, params) ->
+        ApiService.update("articles", slug, [article: params])
 
-  destroy: (slug) ->
-   ApiService.delete("articles/{ slug }")
+    destroy: (slug) ->
+     ApiService.delete("articles/{ slug }")
 ]
 
 export CommentsService: [
-  get: (slug) ->
-    if slug is #string
-      throw Error(
-        "[RWV] CommentsService.get() article slug required to fetch comments"
-      )
+    get: (slug) ->
+        if slug is #string
+            throw Error(
+                "[RWV] CommentsService.get() article slug required to fetch comments"
+            )
 
-    ApiService.get("articles", "{ slug }/comments")
+        ApiService.get("articles", "{ slug }/comments")
 
-  post: (slug, payload) ->
-    ApiService.post("articles/{ slug }/comments", [
-      comment: [body: payload]
-    ])
+    post: (slug, payload) ->
+        ApiService.post("articles/{ slug }/comments", [
+            comment: [body: payload]
+        ])
 
-  destroy: (slug, commentId) ->
-    ApiService.delete("articles/{ slug }/comments/{ commentId }"
+    destroy: (slug, commentId) ->
+        ApiService.delete("articles/{ slug }/comments/{ commentId }"
 ]
 
 export FavoriteService: [
-  add: (slug) ->
-    ApiService.post("articles/{ slug }/favorite")
+    add: (slug) ->
+        ApiService.post("articles/{ slug }/favorite")
 
-  remove: (slug) ->
-    ApiService.delete("articles/{ slug }/favorite")
+    remove: (slug) ->
+        ApiService.delete("articles/{ slug }/favorite")
 ]
