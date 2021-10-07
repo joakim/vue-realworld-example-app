@@ -87,4 +87,3 @@ export FavoriteService: [
 	remove: (slug) ->
 		ApiService.delete("articles/{ slug }/favorite")
 ]
-
