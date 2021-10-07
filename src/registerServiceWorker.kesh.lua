@@ -1,6 +1,6 @@
 -- eslint-disable no-console
 
-#import [register] from "register-service-worker"
+import (default as [register]): "register-service-worker"
 
 if process.env.NODE-ENV = "production"
 	register("{ process.env.BASE-URL }service-worker.js", [
