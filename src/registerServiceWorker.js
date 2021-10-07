@@ -1,4 +1,4 @@
--- eslint-disable no-console
+/* eslint-disable no-console */
 
 import (default as [register]): "register-service-worker"
 
